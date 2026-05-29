@@ -1,7 +1,7 @@
 # 🏥 QuickMed — Plateforme de Gestion Médicale
 
 > Projet web développé dans le cadre d'un projet universitaire
-> Institut Supérieur de Comptabilité et d'Administration des Entreprises (ISCAE)
+> École Nationale des Sciences de l'Informatique (ENSI)
 > Campus Universitaire de Manouba, Tunisie — 2026
 > Membres : Zeineb Mekki / Israa Trabelsi
 
@@ -163,6 +163,6 @@ QuickMed/
 ## 📄 Licence
 
 Projet universitaire — © 2026 QuickMed. Tous droits réservés.
-École Nationale des Sciences de l'Informatique
+École Nationale des Sciences de l'Informatique (ENSI)
 Campus Universitaire de Manouba, Tunisie.
 
