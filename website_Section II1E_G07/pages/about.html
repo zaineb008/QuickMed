@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<!-- 
+    Membres: Zeineb Mekki / Israa Trabelsi 
+-->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>À propos - QuickMed</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* css interne */
+        .hero-about {
+            background: linear-gradient(to right, #2c6ed5, #1fa2ff);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Section Nos Valeurs (Style Image) */
+        .values-section {
+            padding: 60px 20px;
+            background-color: #f8faff;
+            text-align: center;
+        }
+
+        .values-header h2 {
+            font-size: 32px;
+            color: #001529;
+            margin-bottom: 10px;
+        }
+
+        .values-header p {
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 12px;
+            border: 1px solid #e0e6ed;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transform: translateY(-5px);
+        }
+
+        .value-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #1c92ff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 20px;
+        }
+
+        .value-card h3 {
+            margin-bottom: 15px;
+            color: #001529;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Section Équipe */
+        .team-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 5px solid #f0f4f8;
+        }
+
+        .team-member h3 { color: #2c6ed5; margin-bottom: 5px; }
+        .team-member p { color: #777; font-style: italic; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media(max-width: 768px) {
+            .values-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="../images/logo.jpg" width="80">
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="medecins.html">Médecins</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section class="hero-about">
+    <h1>À propos de QuickMed</h1>
+    <p>Notre mission : rendre l'accès aux soins de santé plus simple, plus rapide et plus accessible pour tous.</p>
+</section>
+
+<section class="values-section">
+    <div class="values-header">
+        <h2>Nos Valeurs</h2>
+        <p>Les principes qui guident chacune de nos actions</p>
+    </div>
+
+    <div class="values-grid">
+        <div class="value-card">
+            <div class="value-icon">❤️</div>
+            <h3>Simplicité</h3>
+            <p>Une interface intuitive pour tous, accessible à chaque âge et niveau technique.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">🛡️</div>
+            <h3>Sécurité</h3>
+            <p>Vos données personnelles et médicales sont cryptées et protégées selon les normes les plus strictes.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">👥</div>
+            <h3>Accessibilité</h3>
+            <p>Trouvez un médecin où que vous soyez, 24h/24 et 7j/7.</p>
+        </div>
+
+        <div class="value-card">
+            <div class="value-icon">🏅</div>
+            <h3>Qualité</h3>
+            <p>Uniquement des praticiens vérifiés et certifiés pour garantir les meilleurs soins.</p>
+        </div>
+    </div>
+</section>
+<section class="contact-email" style="text-align:center; padding:40px 20px; background-color:#eef6ff;">
+    <h2>Nous contacter par email</h2>
+    <p>Pour toute question, écrivez-nous directement à <a href="mailto:contact@QuickMed.tn">contact@QuickMed.tn</a></p>
+</section>
+
+<section class="team-section">
+    <h2>Notre Équipe</h2>
+    <p>Les esprits passionnés derrière la plateforme</p>
+    
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="../images/directeur.jpg" alt="Directeur">
+            <h3>zeineb mekki</h3>
+            <p>Fondateur & CEO</p>
+        </div>
+        <div class="team-member">
+            <img src="../images/medecinconseil.jpg" alt="Médecin Conseil">
+            <h3>Israa Trabelsi</h3>
+            <p>Directrice Médicale</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>QuickMed</h2>
+            <p>Votre plateforme de confiance pour prendre rendez-vous avec les meilleurs médecins près de chez vous.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Navigation</h3>
+            <a href="index.html">Accueil</a>
+            <a href="medecins.html">Trouver un médecin</a>
+            <a href="about.html">À propos</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-column">
+            <h3>Services</h3>
+            <a href="#">Médecine générale</a>
+            <a href="#">Spécialistes</a>
+            <a href="#">Téléconsultation</a>
+            <a href="#">Urgences</a>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <p>📧 contact@QuickMed.tn</p>
+            <p>📞 +216 71 234 567</p>
+            <p>📍 Campus Universitaire de Manouba, Tunisie</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 QuickMed. Tous droits réservés.</p>
+    </div>
+</footer>
+
+</body>
+</html>

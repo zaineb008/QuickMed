@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!-- 
+    Membres: Zeineb Mekki / Israa Trabelsi 
+-->
+<html>
+<head>
+    <title>Détails Dr Ali</title>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        .info-box {
+            width: 60%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .form-zone {
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 6px;
+            margin: 5px;
+        }
+
+        .admin-btn {
+            margin: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .message-ok {
+            color: green;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="../images/logo.jpg" width="80">
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="medecins.html">Médecins</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- ===== BOUTONS ADMIN ===== -->
+<div style="text-align:center;">
+    <button class="admin-btn" onclick="loginAdmin()">Mode Admin</button>
+    <button class="admin-btn" onclick="logoutAdmin()">Déconnexion</button>
+</div>
+
+<h2 style="text-align:center;">Profil du Médecin</h2>
+
+<div class="info-box">
+    <img src="../images/doctor1.jpg" width="200">
+
+    <p><strong>Nom :</strong> Ben Salem</p>
+    <p><strong>Prénom :</strong> Ali</p>
+    <p><strong>Spécialité :</strong> Cardiologue</p>
+    <p><strong>Téléphone :</strong> +216 22 111 111</p>
+    <p><strong>Adresse :</strong> Tunis</p>
+    <p><strong>Email :</strong> <a href="mailto:drali@email.com">drali@email.com</a></p>
+
+    <h3>Horaires de consultation</h3>
+
+    <!-- TABLE (vide avec en-têtes, remplie dynamiquement par JS) -->
+    <table id="table-horaires">
+        <tr>
+            <th rowspan="2">Jour</th>
+            <th colspan="2">Horaires</th>
+        </tr>
+        <tr>
+            <th>Matin</th>
+            <th>Après-midi</th>
+        </tr>
+    </table>
+
+    <!-- FORMULAIRE ADMIN : Ajouter / Modifier un horaire -->
+    <div class="form-zone" id="adminForm">
+        <h4>Modifier / Ajouter un horaire</h4>
+
+        <input type="text" id="jour"      placeholder="Jour (ex: Lundi)">
+        <input type="text" id="matin"     placeholder="Matin (ex: 8h - 12h)">
+        <input type="text" id="apresMidi" placeholder="Après-midi (ex: 14h - 18h)">
+        <button onclick="ajouterLigne()">Enregistrer</button>
+
+        <p id="msg-ajout" class="message-ok"></p>
+    </div>
+
+    <!-- FORMULAIRE RECHERCHE -->
+    <div class="form-zone">
+        <h4>Rechercher un jour</h4>
+
+        <input type="text" id="search" placeholder="Ex: Lundi">
+        <button onclick="rechercherHoraire()">Rechercher</button>
+        <button onclick="afficherTableau()">Réinitialiser</button>
+    </div>
+
+    <br>
+    <a href="rendezvous.html"><button>Demande de rendez-vous</button></a>
+</div>
+
+<script>
+var CONFIG = {
+    storageKey    : "horaires1",
+    medecinNom    : "Dr Ali Ben Salem",
+    photo         : "../images/doctor1.jpg",
+    horairesDefaut: [
+        { jour: "Lundi",    matin: "8h - 12h", apresMidi: "14h - 18h", medecinNom: "Dr Ali Ben Salem", photo: "../images/doctor1.jpg" },
+        { jour: "Mardi",    matin: "8h - 12h", apresMidi: "14h - 18h", medecinNom: "Dr Ali Ben Salem", photo: "../images/doctor1.jpg" },
+        { jour: "Mercredi", matin: "8h - 12h", apresMidi: "Fermé",     medecinNom: "Dr Ali Ben Salem", photo: "../images/doctor1.jpg" }
+    ]
+};
+
+</script>
+<script src="../java/details.js"></script>
+
+
+<footer>
+    <div class="footer-container">
+
+        <div class="footer-logo">
+            <h2>QuickMed</h2>
+            <p>
+                Votre plateforme de confiance pour prendre rendez-vous
+                avec les meilleurs médecins près de chez vous.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Navigation</h3>
+            <a href="index.html">Accueil</a>
+            <a href="medecins.html">Trouver un médecin</a>
+            <a href="about.html">À propos</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Services</h3>
+            <a href="#">Médecine générale</a>
+            <a href="#">Spécialistes</a>
+            <a href="#">Téléconsultation</a>
+            <a href="#">Urgences</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <p>📧 contact@QuickMed.tn</p>
+            <p>📞 +216 71 234 567</p>
+            <p>📍 Campus Universitaire de Manouba, Tunisie</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 QuickMed. Tous droits réservés.</p>
+    </div>
+</footer>
+
+</body>
+</html>

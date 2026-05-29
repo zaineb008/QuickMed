@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!-- 
+    Membres: Zeineb Mekki / Israa Trabelsi 
+-->
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendez-vous</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, select, button {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        /* ===== MESSAGES D'ERREUR ===== */
+        .err-msg {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: block;
+            min-height: 16px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <img src="../images/logo.jpg" alt="Logo" width="80">
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="medecins.html">Médecins</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<h2>Demande de Rendez-vous</h2>
+
+<div class="form-container">
+    <form id="formRdv" action="../php/traitement_rendezvous.php" method="POST">
+
+        <label>Nom complet</label>
+        <input type="text" id="r-nom" name="nom" placeholder="Ex: Ahmed Ben Ali"
+               required minlength="2" maxlength="50"
+               pattern="[a-zA-ZÀ-ÿ\s]+">
+        <span class="err-msg" id="err-r-nom"></span>
+
+        <label>Prénom</label>
+        <input type="text" id="r-prenom" name="prenom" placeholder="Ex: Mohamed"
+               required minlength="2" maxlength="50"
+               pattern="[a-zA-ZÀ-ÿ\s]+">
+        <span class="err-msg" id="err-r-prenom"></span>
+
+        <label>Email</label>
+        <input type="email" id="r-email" name="email" placeholder="Ex: ahmed@email.com"
+               required>
+        <span class="err-msg" id="err-r-email"></span>
+
+        <label>Téléphone</label>
+        <input type="tel" id="r-tel" name="tel" placeholder="Ex: +21671234567"
+               required pattern="\+?[0-9]{8,15}">
+        <span class="err-msg" id="err-r-tel"></span>
+
+        <label>Date du rendez-vous</label>
+        <input type="date" id="r-date" name="date" required>
+        <span class="err-msg" id="err-r-date"></span>
+
+        <label>Heure du rendez-vous</label>
+        <input type="time" id="r-heure" name="heure" required min="08:00" max="18:00">
+        <span class="err-msg" id="err-r-heure"></span>
+
+        <label>Type de consultation</label>
+        <select id="r-type" name="type" required>
+            <option value="">Sélectionnez un type de consultation</option>
+            <option value="consultation">Consultation</option>
+            <option value="urgence">Urgence</option>
+        </select>
+        <span class="err-msg" id="err-r-type"></span>
+
+        <label>Sexe</label>
+        <div>
+            <label><input type="radio" name="sexe" value="homme" required> Homme</label>
+            <label><input type="radio" name="sexe" value="femme"> Femme</label>
+        </div>
+        <span class="err-msg" id="err-r-sexe"></span>
+
+        <label><input type="checkbox" id="r-conditions" name="conditions" required> J'accepte les conditions d'utilisation</label>
+        <span class="err-msg" id="err-r-conditions"></span>
+
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <div id="r-succes" style="display:none; background:#e6f4ea; color:green; padding:12px; border-radius:8px; text-align:center; margin-top:15px;">
+        ✅ Votre demande de rendez-vous a été envoyée !
+    </div>
+</div>
+<script>
+/* ===== VALIDATION FORMULAIRE RENDEZ-VOUS ===== */
+
+document.getElementById("formRdv").addEventListener("submit", function(e) {
+
+    const nom        = document.getElementById("r-nom").value.trim();
+    const prenom     = document.getElementById("r-prenom").value.trim();
+    const email      = document.getElementById("r-email").value.trim();
+    const tel        = document.getElementById("r-tel").value.trim();
+    const date       = document.getElementById("r-date").value;
+    const heure      = document.getElementById("r-heure").value;
+    const type       = document.getElementById("r-type").value;
+    const sexeEl     = document.querySelector('input[name="sexe"]:checked');
+    const conditions = document.getElementById("r-conditions").checked;
+
+    // Regex
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regexTel   = /^\+?[0-9]{8,15}$/;
+    const regexNom   = /^[a-zA-ZÀ-ÿ\s]{2,}$/;
+
+    let valide = true;
+
+    // Nom
+    if (!regexNom.test(nom)) {
+        document.getElementById("err-r-nom").textContent = "⚠ Nom invalide (min 2 lettres, pas de chiffres).";
+        valide = false;
+    } else {
+        document.getElementById("err-r-nom").textContent = "";
+    }
+
+    // Prénom
+    if (!regexNom.test(prenom)) {
+        document.getElementById("err-r-prenom").textContent = "⚠ Prénom invalide (min 2 lettres, pas de chiffres).";
+        valide = false;
+    } else {
+        document.getElementById("err-r-prenom").textContent = "";
+    }
+
+    // Email
+    if (!regexEmail.test(email)) {
+        document.getElementById("err-r-email").textContent = "⚠ Adresse email invalide.";
+        valide = false;
+    } else {
+        document.getElementById("err-r-email").textContent = "";
+    }
+
+    // Téléphone
+    if (!regexTel.test(tel)) {
+        document.getElementById("err-r-tel").textContent = "⚠ Numéro invalide (8 à 15 chiffres, ex: +21671234567).";
+        valide = false;
+    } else {
+        document.getElementById("err-r-tel").textContent = "";
+    }
+
+    // Date
+    const today = new Date().toISOString().split("T")[0];
+    if (!date || date < today) {
+        document.getElementById("err-r-date").textContent = "⚠ Veuillez choisir une date valide (aujourd'hui ou futur).";
+        valide = false;
+    } else {
+        document.getElementById("err-r-date").textContent = "";
+    }
+
+    // Heure
+    if (!heure) {
+        document.getElementById("err-r-heure").textContent = "⚠ Veuillez choisir une heure.";
+        valide = false;
+    } else {
+        document.getElementById("err-r-heure").textContent = "";
+    }
+
+    // Type de consultation
+    if (!type) {
+        document.getElementById("err-r-type").textContent = "⚠ Veuillez sélectionner un type de consultation.";
+        valide = false;
+    } else {
+        document.getElementById("err-r-type").textContent = "";
+    }
+
+    // Sexe
+    if (!sexeEl) {
+        document.getElementById("err-r-sexe").textContent = "⚠ Veuillez sélectionner votre sexe.";
+        valide = false;
+    } else {
+        document.getElementById("err-r-sexe").textContent = "";
+    }
+
+    // Conditions
+    if (!conditions) {
+        document.getElementById("err-r-conditions").textContent = "⚠ Vous devez accepter les conditions.";
+        valide = false;
+    } else {
+        document.getElementById("err-r-conditions").textContent = "";
+    }
+
+    if (!valide) {
+        e.preventDefault();
+    }
+});
+</script>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h2>QuickMed</h2>
+            <p>
+                Votre plateforme de confiance pour prendre rendez-vous
+                avec les meilleurs médecins près de chez vous.
+            </p>
+        </div>
+
+        
+        <div class="footer-column">
+            <h3>Navigation</h3>
+            <a href="index.html">Accueil</a>
+            <a href="medecins.html">Trouver un médecin</a>
+            <a href="about.html">À propos</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        
+        <div class="footer-column">
+            <h3>Services</h3>
+            <a href="#">Médecine générale</a>
+            <a href="#">Spécialistes</a>
+            <a href="#">Téléconsultation</a>
+            <a href="#">Urgences</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <p>📧 contact@QuickMed.tn</p>
+            <p>📞 +216 71 234 567</p>
+            <p>📍 Campus Universitaire de Manouba, Tunisie</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 QuickMed. Tous droits réservés.</p>
+        
+    </div>
+
+</footer>
+
+</body>
+</html>

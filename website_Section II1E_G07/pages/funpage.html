@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- 
+    Membres: Zeineb Mekki / Israa Trabelsi 
+-->
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Fun Page - QuickMed</title>
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+
+/* ===== FOND ===== */
+body {
+    background: linear-gradient(to bottom, #01173b, #1fa2ff);
+}
+
+/* ===== CONTAINER ===== */
+.game-container {
+    text-align: center;
+    padding: 40px;
+}
+
+/* ===== SCORE / TIMER ===== */
+.score, .timer {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+/* ===== NIVEAU 1 : parentBox ===== */
+/* C'est le 1er niveau de la hiérarchie DOM pour le bubbling */
+.game-box {
+    background: #e8f0fe;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 500px;
+    margin: auto;
+    border: 3px solid #2c6ed5;
+}
+
+/* ===== NIVEAU 2 : childBox ===== */
+/* C'est le 2ème niveau imbriqué dans parentBox */
+.child-zone {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px dashed #1fa2ff;
+    margin-bottom: 15px;
+}
+
+/* ===== NIVEAU 3 : interactiveEl ===== */
+/* C'est le 3ème niveau imbriqué dans childBox */
+.interactive-zone {
+    background: #f0f7ff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #90caf9;
+    margin-top: 10px;
+}
+
+/* ===== QUESTION ===== */
+#question {
+    font-size: 20px;
+    font-weight: bold;
+    color: #01173b;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+/* Animation fade */
+.fade {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* ===== INPUT ===== */
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* ===== BOUTON ===== */
+button {
+    padding: 10px 20px;
+    background: #2c6ed5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1fa2ff;
+    transform: scale(1.05);
+}
+
+/* ===== MESSAGE JEU ===== */
+.message {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    min-height: 24px;
+}
+
+/* ===== SECTION BUBBLING ===== */
+.bubbling-info {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: white;
+    font-size: 14px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bubbling-info span {
+    font-weight: bold;
+}
+
+/* LOG BUBBLING */
+#bubbling-log {
+    background: #01173b;
+    color: #1fa2ff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    font-family: monospace;
+    font-size: 13px;
+    min-height: 40px;
+    text-align: left;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="../images/logo.jpg" width="80">
+    <nav>
+        <ul>
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="medecins.html">Médecins</a></li>
+            <li><a href="about.html">À propos</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="game-container">
+
+    <h2 style="color:white;">🧠 Jeu : Devine la spécialité médicale</h2>
+
+    <p class="score">Score : <span id="score">0</span></p>
+    <p class="timer">Temps : <span id="temps">10</span>s</p>
+
+    <!--
+        STRUCTURE DOM À 3 NIVEAUX IMBRIQUÉS (pour le bubbling) :
+        Niveau 1 → #parentBox    (game-box)
+        Niveau 2 → #childBox     (child-zone)
+        Niveau 3 → #interactiveEl (interactive-zone)
+    -->
+
+    <!-- NIVEAU 1 : parentBox -->
+    <div class="game-box" id="parentBox">
+
+        <!-- NIVEAU 2 : childBox -->
+        <div class="child-zone" id="childBox">
+
+            <!-- NIVEAU 3 : interactiveEl -->
+            <div class="interactive-zone" id="interactiveEl">
+
+                <!-- Question affichée dynamiquement -->
+                <p id="question">Chargement...</p>
+
+                <!-- Saisie de la réponse -->
+                <input type="text" id="reponse" placeholder="Votre réponse...">
+
+                <br>
+
+                <!-- Bouton valider -->
+                <button id="btnValider">Valider ✔</button>
+
+            </div>
+            <!-- fin niveau 3 -->
+
+        </div>
+        <!-- fin niveau 2 -->
+
+        <!-- Bouton rejouer (caché au départ) -->
+        <button id="btnRejouer" style="display:none; margin-top:15px;" onclick="rejouer()">
+            🔄 Rejouer
+        </button>
+
+    </div>
+    <!-- fin niveau 1 -->
+
+    <!-- Message du jeu -->
+    <p class="message" id="message"></p>
+
+    <!-- Section bubbling : affiche quel niveau a reçu le clic -->
+    <div class="bubbling-info">
+        <span>📡 Propagation des événements (Event Bubbling) :</span>
+        <div id="bubbling-log">Cliquez dans la zone de jeu pour voir la propagation...</div>
+    </div>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+<script src="../java/funpage.js"></script>
+
+<footer>
+    <div class="footer-container">
+
+        <div class="footer-logo">
+            <h2>QuickMed</h2>
+            <p>
+                Votre plateforme de confiance pour prendre rendez-vous
+                avec les meilleurs médecins près de chez vous.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h3>Navigation</h3>
+            <a href="index.html">Accueil</a>
+            <a href="medecins.html">Trouver un médecin</a>
+            <a href="about.html">À propos</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Services</h3>
+            <a href="#">Médecine générale</a>
+            <a href="#">Spécialistes</a>
+            <a href="#">Téléconsultation</a>
+            <a href="#">Urgences</a>
+        </div>
+
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <p>📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="85e6eaebf1e4e6f1c5d4f0ece6eec8e0e1abf1eb">[email&#160;protected]</a></p>
+            <p>📞 +216 71 234 567</p>
+            <p>📍 Campus Universitaire de Manouba, Tunisie</p>
+        </div>
+
+    </div>
+
+    <
